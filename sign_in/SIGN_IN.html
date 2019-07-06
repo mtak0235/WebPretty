@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <script src="login.js"></script>
+        <title>SIGN_IN</title>
+        <link rel="stylesheet" href="login.css">
+    </head>
+    <body>
+    <div class="login">
+        <h1>login</h1>
+        <table broder="2">
+        
+                <tr>
+                    <td>ID</td>
+                    <td><input type="text" name="id" id="loginId"></td>
+                </tr>
+                <tr>
+                    <td>PW</td>
+                    <td><input type="password" name="pw" id="loginPw" ></td>
+                </tr>
+                <tr>
+                    <td><input type="submit" onclick="login()"></td>
+                </tr>
+            
+        </table>
+    </div>
+    <script>
+        function login(){
+            var Id= document.getElementById("loginId").value;
+            var Pw= document.getElementById("loginPw").value;
+if(Id==="luda"&& Pw==="0000"){
+    alert(Id+'님 안녕하십니까');
+}
+else{
+    alert('id 혹은 pw 가 틀리셨습니다.');
+    }
+}
+    </script>
+    </body>
+</html>
