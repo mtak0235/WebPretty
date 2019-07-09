@@ -1,14 +1,13 @@
 var express = require('express');
-var mysql = require('mysql');
-var connection = mysql.createConnection({
-    host : '168.131.35.103',
-    user : 'webpretty',                       
-    password : 'webpretty123',
-    port : 3306,
-    database : 'webpretty'
-});
+var db = require('./dbconnection');
 
 var app = express();
+
+var userRouter = require('./route/auth');
+var boardRouter = require('./route/board');
+
+app.use("/auth",userRouter);
+app.use("/board",boardRouter);
 
 app.set('port', process.env.PORT || 3000);
 
@@ -18,7 +17,7 @@ app.get('/', function(req, res) {
 
 app.get('/user', function(req, res){
     
-    connection.query('SELECT * from user', function(err, rows) {
+    db.query('SELECT * from user', function(err, rows) {
         if(err){
             console.log(err);
         }
