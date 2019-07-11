@@ -1,0 +1,25 @@
+{
+  "name": "webpretty",
+  "version": "1.0.0",
+  "description": "이 프로젝트는 준비중입니다.",
+  "main": "app.js",
+  "dependencies": {
+    "express": "^4.17.1",
+    "mysql": "^2.17.1"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/JNU-econovation/WebPretty.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/JNU-econovation/WebPretty/issues"
+  },
+  "homepage": "https://github.com/JNU-econovation/WebPretty#readme"
+}

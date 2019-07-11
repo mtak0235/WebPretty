@@ -1,7 +1,16 @@
-var app = require('express');
+var express = require('express');
 var db = require('../dbconnection');
-var route = require('route');
 
-mmodule.exports = boardRouter;
-route.post('/login', function(req, res) {
-}
+var router = express.Router();
+
+router.get('/', function(req, res) {
+    db.query('SELECT p.postTitle, p.createAt, p.userNum from post p', function(err, rows) {
+        if(err) {
+            console.log(err);
+        }
+        console.log(rows);
+        res.send(rows);
+    })
+});
+
+module.exports = router;
