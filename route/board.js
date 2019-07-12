@@ -1,7 +1,8 @@
-var app = require('express');
+var express = require('express');
 var db = require('../dbconnection');
-var route = require('route');
 
-mmodule.exports = boardRouter;
-route.post('/login', function(req, res) {
-}
+var router = express.Router();
+
+module.exports = router;
+
+router.get('/board', function(req, res) {
