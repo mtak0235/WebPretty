@@ -33,9 +33,9 @@
                     <!-- Collect the nav links, forms, and other content for toggling -->
                     <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                         <ul class="nav navbar-nav">
-                            <li><a href="/views/list.ejs">Q&A</a></li>
-                            <li><a href="/views/list.ejs">notice</a></li>
-                            <li><a href="/views/list.ejs">my pqge</a></li>
+                            <li><a href="/board.html">Q&A</a></li>
+                            <li><a href="/board.html">notice</a></li>
+                            <li><a href="/board.html">my pqge</a></li>
                             <li class="dropdown">
                                 <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Dropdown <span class="caret"></span></a>
                                 <ul class="dropdown-menu" role="menu">
@@ -85,10 +85,7 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <%
-                    for(var i = 0; i<rows.length; i++)
-                    {
-                    %>
+
                     <tr>
                         <td><%=rows[i].postId%></td>
                         <td><%=rows[i].postTitle%></td>
@@ -96,9 +93,7 @@
                         <td><%=rows[i].createAt%></td>
                         <td><%=rows[i].hit%></td>
                     </tr>
-                    <%
-                    }
-                    %>
+
                 </tbody>
             </table>
             <hr/>

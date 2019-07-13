@@ -3,7 +3,16 @@ var db = require('../dbconnection');
 
 var router = express.Router();
 
-router.get('/list', function(req, res) {
+router.get('/', function(req, res) {
+    db.query('select postId, postTitle, createAt, userNum from post', function(err, rows) {
+        if (err) {
+            console.log(err);
+        }
+        console.log(rows);
+        res.send(Rows);
+    })
+})
+/*router.get('/list', function(req, res) {
     res.redirect('/board/1')
 });
 
@@ -14,6 +23,6 @@ router.get('/list/:page', function(req, res, next) {
         console.log('rows: '+ rows);
         res.render('list', {title: 'Board List', rows: rows});
     }); 
-});
+});*/
 
 module.exports = router;
