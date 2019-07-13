@@ -33,9 +33,9 @@
                     <!-- Collect the nav links, forms, and other content for toggling -->
                     <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                         <ul class="nav navbar-nav">
-                            <li><a href="/views/list.ejs">Q&A</a></li>
-                            <li><a href="/views/list.ejs">notice</a></li>
-                            <li><a href="/views/list.ejs">my pqge</a></li>
+                            <li><a href="/board.html">Q&A</a></li>
+                            <li><a href="/board.html">notice</a></li>
+                            <li><a href="/board.html">my pqge</a></li>
                             <li class="dropdown">
                                 <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Dropdown <span class="caret"></span></a>
                                 <ul class="dropdown-menu" role="menu">
@@ -85,20 +85,27 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <%
-                    for(var i = 0; i<rows.length; i++)
-                    {
-                    %>
                     <tr>
-                        <td><%=rows[i].postId%></td>
-                        <td><%=rows[i].postTitle%></td>
-                        <td><%=rows[i].userNum%></td>
-                        <td><%=rows[i].createAt%></td>
-                        <td><%=rows[i].hit%></td>
+                        <td>1</td>
+                        <td>강식당 2에서 나온 노래 뭔가요?</td>
+                        <td>소영짱</td>
+                        <td>2019.07.09</td>
+                        <td>2</td>
                     </tr>
-                    <%
-                    }
-                    %>
+                    <tr>
+                        <td>2</td>
+                        <td>런닝맨에 나온 노래 제목 궁금함</td>
+                        <td>민경짱</td>
+                        <td>2019.07.08</td>
+                        <td>2</td>
+                    </tr>
+                    <tr>
+                        <td>3</td>
+                        <td>봄 사랑 벚꽃말고랑 비슷한 노래 추천좀</td>
+                        <td>소영짱</td>
+                        <td>2019.07.07</td>
+                        <td>2</td>
+                    </tr>
                 </tbody>
             </table>
             <hr/>

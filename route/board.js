@@ -3,17 +3,15 @@ var db = require('../dbconnection');
 
 var router = express.Router();
 
-router.get('/list', function(req, res) {
-    res.redirect('/board/1')
-});
-
-router.get('/list/:page', function(req, res, next) {
-
-    db.query('select postId,postTitle,userNum,hit,DATE_FORMAT(createAt, "%Y/%m/%d %T") as createAt from post', function (err,rows) {
-        if (err) throw (err);
-        console.log('rows: '+ rows);
-        res.render('list', {title: 'Board List', rows: rows});
-    }); 
+module.exports = router;
+router.get('/', function(req, res) {
+    db.query('SELECT p.postTitle, p.createAt, p.userNum from post p', function(err, rows) {
+        if(err) {
+            console.log(err);
+        }
+        console.log(rows);
+        res.send(rows);
+    })
 });
 
 module.exports = router;
