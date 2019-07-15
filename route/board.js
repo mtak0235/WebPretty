@@ -63,7 +63,8 @@ router.get('/detail/:postId', function(req, res, next) {
     
 })*/
 
-router.get('/write/', function(req, res, next) {
+//쓰기
+router.get('/write', function(req, res, next) {
     res.render('write');
 });
 
@@ -76,7 +77,7 @@ router.post('/write', function(req, res, next) {
     var file = req.body.file;
 
     db.beginTransaction(function(err) {
-        db.query('insert into post(postTitle, postContents, file, createAt values(?, ?, ?, curdate())', [title, content, file], function(err) {
+        db.query('insert into post(postTitle, postContents, file, createAt) values(?, ?, ?, curdate())', [title, content, file], function(err) {
             if (err) {
                 console.log(err);
                 db.rollback(function(err) {
@@ -104,6 +105,37 @@ router.post('/write', function(req, res, next) {
         });
     });
 });
+
+//수정
+
+router.get('/edit/:postId', function(req, res, next) {
+    var postId = req.params.postId;
+
+    db.query('select postId, postTitle, postContents, file from post where postId = ?', [postId], function(err, rows) {
+        if (err) {
+            console.log(err);
+        }
+        res.render('edit', {postId: postId, rows: rows});
+    })
+    
+});
+
+router.post('/edit/:postId', function(req, res, next) {
+    var body = req.body;
+    var postId = req.params.postId;
+    var title = req.body.title;
+    var content = req.body.content;
+    var file = req.body.file;
+    
+    db.query('update post set postTitle = ?, postContents = ?, file = ?, createAt = curdate() where postId = ?', [title, content, file, postId], function(err, rows) {
+        if (err) {
+            console.log(err);
+        }
+        res.render('edit', {postId: postId, rows: rows});
+        res.redirect('/board/detail/' + postId);
+    })
+})
+
 /*
     //페이징
     router.get('/', function(req, res) {

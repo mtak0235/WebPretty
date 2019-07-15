@@ -3,7 +3,7 @@
     <head>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        <title><%= title %></title>
+        <title>게시판</title>
         <link rel="stylesheet" href="/css/bootstrap.css">
         <link rel="stylesheet" href="/mainPage/style.css">
     </head>
@@ -73,38 +73,53 @@
             </nav>
         </div>
         <div class="container">
-            <h1><strong><%= title %></strong></h1>
-            <table class="table">
-                <tr>
-                    <th>번호</th>
-                    <td><%= rows[0].postId %></td>
-                    <th>조회수</th>
-                    <td><%= rows[0].hit %></td>
-                    <th>작성자</th>
-                    <td><%= rows[0].userNum %></td>
-                </tr>
-                <tr>
-                    <th>제목</th>
-                    <td><%= rows[0].postTitle %></td>
-                    <th>작성일</th>
-                    <td colspan="2"><%= rows[0].createAt %></td>
-                </tr>
-                <tr>
-                    <td colspan="6" height="400"><%= rows[0].postContents %></td>
-                </tr>
-                <tr>
-                    <th>첨부파일</th>
-                    <td colspan="5"><%= rows[0].file %></td>
-                    
-                </tr>
+            <h1><strong>공지사항</strong></h1>
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>번호</th>
+                        <th>제목</th>
+                        <th>작성자</th>
+                        <th>날짜</th>
+                        <th>조회수</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <% for(var i = 0; i < rows.length; i++) { %>
+                    <tr>
+                        <td>
+                            <%=rows[i].noticeNo%>
+                        </td>
+                        <td>
+                            <a href='/notice/read/<%=rows[i].noticeNo%>'><%= rows[i].noticeTitle %></a>
+                        </td>
+                        <td>
+                            관리자
+                        </td>
+                        <td>
+                            <%= rows[i].createAt %>
+                        </td>
+                        <td>
+                            <%= rows[i].hit %>
+                        </td>
+                    </tr>
+                    <% }%>
+                </tbody>
             </table>
             <hr/>
-            
-            <a class="btn btn-default pull-right" href="/board/edit/<%= rows[0].postId %>">수정</a>
-            <a class="btn btn-default pull-right" href="/board/delete">삭제</a>
-            <a class="btn btn-default pull-right" href="/board">목록</a>
+            <a class="btn btn-default pull-right" href="/board/write">글쓰기</a>
 
-            
+            <div class="text-center">
+                <ul class="pagination">
+                    <li><a href="#">1</a></li>
+                    <li><a href="#">2</a></li>
+                    <li><a href="#">3</a></li>
+                    <li><a href="#">4</a></li>
+                    <li><a href="#">5</a></li>
+                </ul>
+            </div>
+        </div>
+
         <script src="js/jquery-3.4.1.min.js"></script>
         <script src="js/bootstrap.js"></script>
     </body>

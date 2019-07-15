@@ -12,8 +12,11 @@ app.use(bodyParser.urlencoded({extended:true}));
 
 //var userRouter = require('./route/auth');
 var boardRouter = require('./route/board');
+var noticeRouter = require('./route/notice');
+
 //app.use("/auth",userRouter);
 app.use("/board",boardRouter);
+app.use("/notice",noticeRouter);
 
 app.use(express.static('board'));
 app.use('/public', express.static(path.join(__dirname, 'public')));

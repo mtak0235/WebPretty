@@ -77,20 +77,20 @@
             <table class="table">
                 <tr>
                     <th>번호</th>
-                    <td><%= rows[0].postId %></td>
+                    <td><%= rows[0].noticeNo %></td>
                     <th>조회수</th>
                     <td><%= rows[0].hit %></td>
                     <th>작성자</th>
-                    <td><%= rows[0].userNum %></td>
+                    <td>관리자</td>
                 </tr>
                 <tr>
                     <th>제목</th>
-                    <td><%= rows[0].postTitle %></td>
+                    <td><%= rows[0].noticeTitle %></td>
                     <th>작성일</th>
                     <td colspan="2"><%= rows[0].createAt %></td>
                 </tr>
                 <tr>
-                    <td colspan="6" height="400"><%= rows[0].postContents %></td>
+                    <td colspan="6" height="400"><%= rows[0].noticeContents %></td>
                 </tr>
                 <tr>
                     <th>첨부파일</th>
@@ -99,10 +99,8 @@
                 </tr>
             </table>
             <hr/>
-            
-            <a class="btn btn-default pull-right" href="/board/edit/<%= rows[0].postId %>">수정</a>
-            <a class="btn btn-default pull-right" href="/board/delete">삭제</a>
-            <a class="btn btn-default pull-right" href="/board">목록</a>
+
+            <a class="btn btn-default pull-right" href="/notice">목록</a>
 
             
         <script src="js/jquery-3.4.1.min.js"></script>

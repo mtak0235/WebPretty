@@ -3,7 +3,7 @@
     <head>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        <title><%= title %></title>
+        <title>수정하기</title>
         <link rel="stylesheet" href="/css/bootstrap.css">
         <link rel="stylesheet" href="/mainPage/style.css">
     </head>
@@ -73,38 +73,56 @@
             </nav>
         </div>
         <div class="container">
-            <h1><strong><%= title %></strong></h1>
-            <table class="table">
-                <tr>
-                    <th>번호</th>
-                    <td><%= rows[0].postId %></td>
-                    <th>조회수</th>
-                    <td><%= rows[0].hit %></td>
-                    <th>작성자</th>
-                    <td><%= rows[0].userNum %></td>
-                </tr>
-                <tr>
-                    <th>제목</th>
-                    <td><%= rows[0].postTitle %></td>
-                    <th>작성일</th>
-                    <td colspan="2"><%= rows[0].createAt %></td>
-                </tr>
-                <tr>
-                    <td colspan="6" height="400"><%= rows[0].postContents %></td>
-                </tr>
-                <tr>
-                    <th>첨부파일</th>
-                    <td colspan="5"><%= rows[0].file %></td>
-                    
-                </tr>
-            </table>
-            <hr/>
-            
-            <a class="btn btn-default pull-right" href="/board/edit/<%= rows[0].postId %>">수정</a>
-            <a class="btn btn-default pull-right" href="/board/delete">삭제</a>
-            <a class="btn btn-default pull-right" href="/board">목록</a>
+            <h1><strong>수정하기</strong></h1>
+            <form method="post" action="/board/edit/<%= postId %>" onsubmit= "onWriteSubmit()">
+                <input type="hidden" name="postId" id="postId" value="<%= postId %>" />
+                <table class="table">
+                    <tr>
+                        <th>제목</th>
+                        <td><input type="text" name="title" id="title" value="<%= rows[0].postTitle %>" required /></td>
+                    </tr>
+                    <tr>
+                        <th>작성자</th>
+                        <td><input type="text" name="writer" id="writer" value="<%= rows[0].userNum %>" required /></td>
+                    </tr>
+                    <tr>
+                        <th>내용</th>
+                        <td><input type="text" name="content" id="content" value="<%= rows[0].postContents %>" required /></td>
+                    </tr>
+                    <tr>
+                        <th>첨부파일</th>
+                        <td><input type="text" name="file" id="file" value="<%= rows[0].file %>" required /></td>
+                    </tr>
+                    <tr>
+                        <th>등록</th>
+                        <td colspan="2"><input type="submit" value="등록"></td>
+                    </tr>
+                </table>
+            </form>
+        </div>
 
-            
+        <script>
+        function onWriteSubmit()
+        {
+            if ( $("#title").val().trim() == "")
+            {
+                var message = "제목을 입력해주세요";
+                $("#title").val("");
+                $("#title").focus();
+                alert(message);
+                return false;
+            }
+
+            if ( $("#content").val().trim() == "")
+            {
+                var message = "제목을 입력해주세요";
+                $("#content").val("");
+                $("#content").focus();
+                alert(message);
+                return false;
+            }
+        }
+        </script>
         <script src="js/jquery-3.4.1.min.js"></script>
         <script src="js/bootstrap.js"></script>
     </body>
