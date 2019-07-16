@@ -1,12 +1,17 @@
 var express = require('express');
 var db = require('../dbconnection');
-var fs = require('fs');
 var ejs = require('ejs');
+var fs = require('fs');
+var multer = require('multer');
+
+var cors = require('cors');
 
 var router = express.Router();
 
+
+
 //목록
-router.get('/', function(req, res) {
+router.get('/', function(req, res) { //localhost:3000/board 일 때
     db.query('select postId, postTitle, userNum, hit, DATE_FORMAT(curdate(), "%Y.%m.%d") as createAt from post', function(err, rows) {
         if (err) {
             console.log(err);
@@ -18,7 +23,7 @@ router.get('/', function(req, res) {
 });
 
 //읽기
-router.get('/detail/:postId', function(req, res, next) {
+router.get('/detail/:postId', function(req, res, next) { //localhost:3000/board/detail/:postid
     var postId = req.params.postId;
     console.log("postId : " + postId);
 
@@ -44,7 +49,6 @@ router.get('/detail/:postId', function(req, res, next) {
                         res.render('detail', {title: rows[0].postTitle, rows: rows});
                     })
                 }
-            
             });
         });
     });
