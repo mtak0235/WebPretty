@@ -26,6 +26,8 @@ app.use("/uploads",uploadRouter);
 app.use(express.static('board'));
 app.use('/public', express.static(path.join(__dirname, 'public')));
 app.use('/uploads', express.static(path.join(__dirname, 'uploads'))); 
+app.use('/sign_up', express.static(path.join(__dirname,'/SIGN_UP.html')));
+app.use('/sign_in', express.static(path.join(__dirname,'/SIGN_IN.html')));
 app.use('/mainPage', express.static(path.join(__dirname,'/MAIN.html')));
 
 app.set('port', process.env.PORT || 3000);
@@ -39,6 +41,22 @@ app.get('/', function(req, res) { //localhost:3000
         res.end(data, 'utf-8');
     })
 });
+
+app.get('/sign_up', function(req, res) {
+    res.writeHead(200, {"Content-Type":"text/html"});
+    fs.readFile(__dirname + "/sign_up/SIGN_UP.html", (err, data) => {
+        if (err) throw (err);
+        res.end(data, 'utf-8');
+    })
+})
+
+app.get('/sign_in', function(req, res) {
+    res.writeHead(200, {"Content-Type":"text/html"});
+    fs.readFile(__dirname + "/sign_in/SIGN_IN.html", (err, data) => {
+        if (err) throw (err);
+        res.end(data, 'utf-8');
+    })
+})
 
 app.get('/user', function(req, res){
     
