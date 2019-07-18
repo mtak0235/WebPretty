@@ -140,6 +140,16 @@ router.post('/edit/:postId', function(req, res, next) {
     })
 })
 
+//삭제
+router.get('/delete/:postId', function(req, res, next) {
+    var postId = req.params.postId;
+    var body = req.body;
+    var title = req.body.title;
+    var content = req.body.content;
+    var file = req.body.file;
+
+})
+
 /*
     //페이징
     router.get('/', function(req, res) {
