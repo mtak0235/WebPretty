@@ -1,44 +1,76 @@
+
+body{
+    color: #555555;
+}
+div#s{     
+    background-color: powderblue;
+    width: 100%;
+    height: 70px;
+
+}
 div#A{
-    width:60%;
-    height:50px;
-    float:left;
-    margin:5px;
+   
+    width : 60%;
+    height : 50px;
+    float : left;
+    margin-left: 30px;
+    margin-top: 10px;
+   font-weight:bolder;
+   font-size: 30px;
+   padding-top: 10px;
+    
 }
 div#B{
-    width:30%;
+    color:white;
     height:50px;
-    float:left;
+    float:right;
     margin:5px;
+    padding-top: 15px;
+}
+p{
+    margin : 0 0 2px;
 }
 div#C{
     width:100%;
     height:50px;
     float:left;
     margin:5px;
+    background-color: powderblue;
+}
+img{
+    width: 100%;
+    height:100%
 }
 div#D{
     width:24%;
     height:300px;
     float:left;
     margin:5px;
+    margin-top: 20px;
+    margin-left: 40px;
+    
+   
 }
 div#E{
     width:24%;
     height:300px;
     float:left;
     margin:5px;
+    margin-top: 20px
 }
 div#F{
     WIDTH:24%;
     height:300px;
     float:left;
     margin:5px;
+    margin-top: 20px
 }
 div#G{
-    width:24%;
+    width:20%;
     height:300px;
     float:left;
     margin:5px;
+    padding-top: 98px;
 }
 div#H{
     width:10%;
@@ -56,4 +88,8 @@ div#J{
     height:500px;
     float:left;
     margin:5px;}
+h2{
+    margin:3%;
+    padding:15px ;
 
+}
