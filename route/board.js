@@ -143,10 +143,10 @@ router.post('/edit/:postId', function(req, res, next) {
 //삭제
 router.get('/delete/:postId', function(req, res, next) {
     var postId = req.params.postId;
-    var body = req.body;
-    var title = req.body.title;
-    var content = req.body.content;
-    var file = req.body.file;
+
+    db.query('delete from post where postId = ?', [postId], function(err, rows) {
+        res.redirect('/');
+    })
 
 })
 
