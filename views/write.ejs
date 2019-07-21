@@ -76,6 +76,20 @@
             <h2><strong><br>글쓰기</strong></h2>
             <form method="post" action="/board/write" onsubmit= "onWriteSubmit()">
                 <table class="table">
+                    <fieldset style="width:300px">
+                            <legend>장르</legend>
+                            <input type="checkbox" name = "genre" value="ballad">발라드
+                            <input type="checkbox" name = "genre" value="dance">댄스
+                            <input type="checkbox" name = "genre" value="hiphop">랩/힙합
+                            <input type="checkbox" name = "genre" value="r&b">R&B
+                            <input type="checkbox" name = "genre" value="indi">인디음악
+                            <input type="checkbox" name = "genre" value="rock&metal">록/메탈
+                            <input type="checkbox" name = "genre" value="trot">트로트
+                            <input type="checkbox" name = "genre" value="fork">포크/블루스/컨트리
+                            <input type="checkbox" name = "genre" value="electronica">일렉트로니카
+                            <input type="checkbox" name = "genre" value="pop">POP
+                        </fieldset>
+                    </tr>
                     <tr>
                         <th>제목</th>
                         <td><input type="text" name="title" id="title" required /></td>
@@ -90,14 +104,11 @@
                     </tr>
                     <form method="post" action="/process/upload" entype="multipart/form-data"></form>
                     <tr>
-                </table>
-            </form>
-            <form method="post" action="/uploads" enctype="multipart/form-data">
-                <table>
                     <tr>
                         <th>첨부파일</th>
                         <td><input type="file" name="file" required /></td>
                     </tr>
+                    <tr>
                     <tr>
                         <th>등록</th>
                         <td colspan="2"><input type="submit" value="등록"></td>
