@@ -25,6 +25,7 @@ router.get('/', function(req, res) { //localhost:3000/board 일 때
 //읽기
 router.get('/detail/:postId', function(req, res, next) { //localhost:3000/board/detail/:postid
     var postId = req.params.postId;
+    var genre =  req.getParameterValues("genre");
     console.log("postId : " + postId);
 
     db.beginTransaction(function(err) {
@@ -35,7 +36,7 @@ router.get('/detail/:postId', function(req, res, next) { //localhost:3000/board/
                     console.error('rollback error1');
                 });
             }
-            db.query('select postId, postTitle, userNum, postContents, DATE_FORMAT(curdate(), "%Y.%m.%d") as createAt, hit, file from post where postId=?', [postId], function(err, rows) {
+            db.query('select postId, postTitle, userNum, postContents, genre, DATE_FORMAT(curdate(), "%Y.%m.%d") as createAt, hit, file from post where postId=?', [postId], function(err, rows) {
                 if (err) {
                     console.log(err);
                     db.rollback(function () {
@@ -72,16 +73,35 @@ router.get('/write', function(req, res, next) {
     res.render('write');
 });
 
+var storage = multer.diskStorage({
+    destination: function(req, res, callback) {
+        callback(null, 'uploads');
+    },
+    filename: function(req, file, callback) {
+        var extention = path.extname(file.originalname);
+        var basename = path.basename(file.originalname, extention);
+        callback(null, basename + Date.now() + extention);
+    }
+});
+var upload = multer({
+    storage:storage,
+    limits:{
+        files:5
+    }
+});
+
 //데이터베이스에 글 저장
-router.post('/write', function(req, res, next) {
+router.post('/write', upload.array('file', 1), function(req, res, next) {
     var body = req.body;
     var title = req.body.title;
     //var writer = req.params.userNickname;
     var content = req.body.content;
-    var file = req.body.file;
-
+    var genre = req.body.genre;
+    var files = req.files;
+    var filename;
+    
     db.beginTransaction(function(err) {
-        db.query('insert into post(postTitle, postContents, file, createAt) values(?, ?, ?, curdate())', [title, content, file], function(err) {
+        db.query('insert into post(postTitle, postContents, genre, file, createAt) values(?, ?, ?, curdate())', [title, content, genre, filename], function(err) {
             if (err) {
                 console.log(err);
                 db.rollback(function(err) {
@@ -144,12 +164,30 @@ router.post('/edit/:postId', function(req, res, next) {
 router.get('/delete/:postId', function(req, res, next) {
     var postId = req.params.postId;
 
-    db.query('delete from post where postId = ?', [postId], function(err, rows) {
-        res.redirect('/');
+    db.beginTransaction(function(err) {
+        db.query('delete from post where postId = ?', [postId], function(err) {
+            if (err) {
+                console.log(err);
+                db.rollback(function(err) {
+                    console.error('rollback error1');
+                })
+            }
+            db.query('ALTER TABLE post AUTO_INCREMENT=1');
+            db.query('SET @COUNT = 0');
+            db.query('UPDATE post SET postId = @COUNT:=@COUNT+1', function(err, rows) {
+                if (err) {
+                    console.log(err);
+                    db.rollback(function(err) {
+                        console.error('rollback error2');
+                    })
+                }
+                else {
+                    res.redirect('/board');
+                }
+            })
+        })
     })
-
 })
-
 /*
     //페이징
     router.get('/', function(req, res) {
