@@ -1,9 +1,11 @@
 
 div#s{     
-    background-color: powderblue;
-    width: 100%;
-    height: 70px;
-    background-image: url(../image/sand.jpg);
+  position: absolute;
+  top: 0%;
+  left: 0%;
+   width: 100%;
+   height: 80px;
+   background-color:#51575a;
 
 }
 div#A{
@@ -13,123 +15,29 @@ div#A{
     float : left;
     margin-left: 30px;
     margin-top: 10px;
-   font-weight:bolder;
+   font-weight:3500;
    font-size: 30px;
    padding-top: 10px;
-   color: #555555;;
+   color: whitesmoke;;
   
 }
 div#B{
     color:white;
-    height:50px;
+    height:10px;
     float:right;
     margin:5px;
     padding-top: 15px;
 }
-div#B_1{
-    border-top-color: white;
-    background-image: url(../image/ocean.jpg);
-    color: white;
-    padding: 50px 100px;
-    padding-top: 50px;
-    margin-top: 52px;
-    
-}
-.button-wrapper {
-    display: inline-block;
-    margin: 10px 2.5px;
-    padding: 20px;
-}
-.dark-button-2 {
-    background: #333;
-}
-.button {
-    background: #fff;
-    border: none;
-    padding: 2px;
-    cursor: pointer;
-    display: block;
-    position: relative;
-    overflow: hidden;
-    transition: all .35s ease-in-out .35s;
-    margin: 0 auto;
-    width: 150px;
-    text-align: center;
-}
-.dark-button .button span {
-    background: #36B4C7;
-    color: #fff;
-}
-.dark-button .button:after,
-    .dark-button .button:before,
-    .dark-button .button:hover span {
-        background: #fff;
-        color: #444;
-    } 
-    .dark-button-2 .button,
-    .dark-button-2 .button span {
-        background: #333;
-        color: #fff;
-    }
-    .dark-button-2 .button:after,
-    .dark-button-2 .button:before,
-    .dark-button-2 .button:hover span {
-        background: #fff;
-        color: #444;
-    } 
-   .button span {
-        display: block;
-        padding: 15px 30px;
-        background: #fff;
-        z-index: 100;
-        position: relative;
-        transition: all .35s ease-in-out .35s;
-    }
-    .button:hover span {
-        background: #36B4C7;
-        color: #fff;
-        transition: all .35s ease-in-out .35s;
-    }
-    .button:after {
-        bottom: -100%;
-        right: -100%;
-        content: "";
-        width: 100%;
-        height: 100%;
-        position: absolute;
-        background: #36B4C7;
-        transition: all .35s ease-in-out .5s;
-    }
-    .button:hover:after {
-        right: 0;
-        bottom: 0;
-        transition: all ease-in-out .35s;
-    }
-    .button:before {
-        top: -100%;
-        left: -100%;
-        content: "";
-        width: 100%;
-        height: 100%;
-        position: absolute;
-        background: #36B4C7;
-        transition: all .35s ease-in-out .5s;
-    }
-    .button:hover:before {
-        left: 0;
-        top: 0;
-        transition: all ease-in-out .35s;
-    }
 
 p{
     margin : 0 0 0.5px;
 }
 div#C{
     width:100%;
-    height:50px;
+    height:150px;
     float:left;
-    background-image: url(../image/stone.jpg);
-    margin-top: 0.5px;
+
+    margin-top: 10px;
 }
 img{
     width:100%;
