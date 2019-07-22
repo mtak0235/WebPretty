@@ -8,11 +8,9 @@ var cors = require('cors');
 
 var router = express.Router();
 
-
-
 //목록
 router.get('/', function(req, res) { //localhost:3000/board 일 때
-    db.query('select postId, postTitle, userNum, hit, DATE_FORMAT(curdate(), "%Y.%m.%d") as createAt from post', function(err, rows) {
+    db.query('select postId, postTitle, userNum, hit, DATE_FORMAT(now(), "%Y %c/%e %r") as createAt from post', function(err, rows) {
         if (err) {
             console.log(err);
         }
@@ -25,7 +23,6 @@ router.get('/', function(req, res) { //localhost:3000/board 일 때
 //읽기
 router.get('/detail/:postId', function(req, res, next) { //localhost:3000/board/detail/:postid
     var postId = req.params.postId;
-    var genre =  req.getParameterValues("genre");
     console.log("postId : " + postId);
 
     db.beginTransaction(function(err) {
@@ -36,7 +33,7 @@ router.get('/detail/:postId', function(req, res, next) { //localhost:3000/board/
                     console.error('rollback error1');
                 });
             }
-            db.query('select postId, postTitle, userNum, postContents, genre, DATE_FORMAT(curdate(), "%Y.%m.%d") as createAt, hit, file from post where postId=?', [postId], function(err, rows) {
+            db.query('select postId, postTitle, userNum, postContents, genre, DATE_FORMAT(now(), "%Y %c/%e %r") as createAt, hit, file from post where postId=?', [postId], function(err, rows) {
                 if (err) {
                     console.log(err);
                     db.rollback(function () {
@@ -46,7 +43,7 @@ router.get('/detail/:postId', function(req, res, next) { //localhost:3000/board/
                 else {
                     db.commit(function (err) {
                         if (err) console.log(err);
-                        console.log("row : " + rows);
+                        console.log("row : " + rows + "deleted");
                         res.render('detail', {title: rows[0].postTitle, rows: rows});
                     })
                 }
@@ -99,9 +96,11 @@ router.post('/write', upload.array('file', 1), function(req, res, next) {
     var genre = req.body.genre;
     var files = req.files;
     var filename;
+
+    console.log(genre);
     
     db.beginTransaction(function(err) {
-        db.query('insert into post(postTitle, postContents, genre, file, createAt) values(?, ?, ?, curdate())', [title, content, genre, filename], function(err) {
+        db.query('insert into post(postTitle, postContents, genre, file, createAt) values(?, ?, ?, ?, DATE_ADD(NOW(), INTERVAL 9 HOUR))', [title, content, genre, filename], function(err) {
             if (err) {
                 console.log(err);
                 db.rollback(function(err) {
@@ -151,7 +150,7 @@ router.post('/edit/:postId', function(req, res, next) {
     var content = req.body.content;
     var file = req.body.file;
     
-    db.query('update post set postTitle = ?, postContents = ?, file = ?, createAt = curdate() where postId = ?', [title, content, file, postId], function(err, rows) {
+    db.query('update post set postTitle = ?, postContents = ?, file = ?, createAt = DATE_ADD(NOW(), INTERVAL 9 HOUR) where postId = ?', [title, content, file, postId], function(err, rows) {
         if (err) {
             console.log(err);
         }
