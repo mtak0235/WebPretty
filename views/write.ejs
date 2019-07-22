@@ -1,140 +1,167 @@
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        <meta charset="utf-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <title>글쓰기</title>
-        <link rel="stylesheet" href="/css/bootstrap.css">
-        <link rel="stylesheet" href="../public/css/style.css">
-    </head>
-    <body>
-        <div id="s">
-            <div id="A">
-             이 노래 모예요?
-             </div>
-            
-             <div id="B" style="display: inline"><br>
-               <button type = "button" id = "b"> <a href="/sign_up">회원가입</a></button>
-               <button type = "button" id = "b"> <a href="/sign_in">로그인</a></button>
-             </div>
-           </div>
-         <p>  
-         <div id="C">
-            <nav class="navbar navbar-dark bg-dark" >        
-                <div class="container-fluid">
-                    <!-- Brand and toggle get grouped for better mobile display -->
-                    <div class="navbar-header">
-                      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
-                        <span class="sr-only">Toggle navigation</span>
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                        </button>
-                        <a class="navbar-brand" href="/" style='color:white'>Home</a>
-                                  
-                    </div>
-                
-                    <!-- Collect the nav links, forms, and other content for toggling -->
-                    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-                      <ul class="nav navbar-nav" >
-                        <li><a href="/board" style='color:white'>Q&A</a></li>
-                        <li><a href="/notice" style='color:white'>notice</a></li>
-                        <li><a href="/board" style='color:white'>my page</a></li>
-                        <li class="dropdown">
-                          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false" style='color:white'>Dropdown <span class="caret"></span></a>
-                          <ul class="dropdown-menu" role="menu">
-                            <li><a href="#" style='color:white'>Action</a></li>
-                            <li><a href="#" style='color:white'>Another action</a></li>
-                            <li><a href="#" style='color:white'>Something else here</a></li>
-                            <li class="divider"></li>
-                            <li><a href="#" style='color:white'>Separated link</a></li>
-                            <li class="divider"></li>
-                            <li><a href="#">One more separated link</a></li>
-                          </ul>
-                        </li>
-                      </ul>
-                      <form class="navbar-form navbar-left" role="search">
-                        <div class="form-group">
-                          <input type="text" class="form-control" placeholder="Search">
-                        </div>
-                        <button type="submit" class="btn btn-default">Submit</button>
-                      </form>
-                      <ul class="nav navbar-nav navbar-right">
-                        <li><a href="#" style='color:white'>Link</a></li>
-                        <li class="dropdown">
-                          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false" style='color:white'>Dropdown <span class="caret"></span></a>
-                          <ul class="dropdown-menu" role="menu">
-                            <li><a href="#">Action</a></li>
-                            <li><a href="#">Another action</a></li>
-                            <li><a href="#">Something else here</a></li>
-                            <li class="divider"></li>
-                            <li><a href="#">Separated link</a></li>
-                          </ul>
-                        </li>
-                      </ul>
-                    </div><!-- /.navbar-collapse -->
-                  </div><!-- /.container-fluid -->
-                </nav>
-         </div>
-         </p>
-        <div class="container">
-            <h2><strong><br>글쓰기</strong></h2>
-            <form method="post" action="/board/write" onsubmit= "onWriteSubmit()">
-                <table class="table">
-                    <tr>
-                        <th>제목</th>
-                        <td><input type="text" name="title" id="title" required /></td>
-                    </tr>
-                    <tr>
-                        <th>작성자</th>
-                        <td><input type="text" name="writer" id="writer" required /></td>
-                    </tr>
-                    <tr>
-                        <th>내용</th>
-                        <td><input type="text" name="content" id="content" required /></td>
-                    </tr>
-                    <form method="post" action="/process/upload" entype="multipart/form-data"></form>
-                    <tr>
-                </table>
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>글쓰기</title>
+  <link rel="stylesheet" href="/css/bootstrap.css">
+  <link rel="stylesheet" href="../public/css/style.css">
+</head>
+
+<body>
+  <div id="s">
+    <div id="A">
+      이 노래 모예요?
+    </div>
+
+    <div id="B" style="display: inline"><br>
+      <button type="button" id="b"> <a href="/sign_up">회원가입</a></button>
+      <button type="button" id="b"> <a href="/sign_in">로그인</a></button>
+    </div>
+  </div>
+  <p>
+    <div id="C">
+      <nav class="navbar navbar-dark bg-dark">
+        <div class="container-fluid">
+          <!-- Brand and toggle get grouped for better mobile display -->
+          <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse"
+              data-target="#bs-example-navbar-collapse-1">
+              <span class="sr-only">Toggle navigation</span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="/" style='color:white'>Home</a>
+
+          </div>
+
+          <!-- Collect the nav links, forms, and other content for toggling -->
+          <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+            <ul class="nav navbar-nav">
+              <li><a href="/board" style='color:white'>Q&A</a></li>
+              <li><a href="/notice" style='color:white'>notice</a></li>
+              <li><a href="/board" style='color:white'>my page</a></li>
+              <li class="dropdown">
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"
+                  style='color:white'>Dropdown <span class="caret"></span></a>
+                <ul class="dropdown-menu" role="menu">
+                  <li><a href="#" style='color:white'>Action</a></li>
+                  <li><a href="#" style='color:white'>Another action</a></li>
+                  <li><a href="#" style='color:white'>Something else here</a></li>
+                  <li class="divider"></li>
+                  <li><a href="#" style='color:white'>Separated link</a></li>
+                  <li class="divider"></li>
+                  <li><a href="#">One more separated link</a></li>
+                </ul>
+              </li>
+            </ul>
+            <form class="navbar-form navbar-left" role="search">
+              <div class="form-group">
+                <input type="text" class="form-control" placeholder="Search">
+              </div>
+              <button type="submit" class="btn btn-default">Submit</button>
             </form>
-            <form method="post" action="/uploads" enctype="multipart/form-data">
-                <table>
-                    <tr>
-                        <th>첨부파일</th>
-                        <td><input type="file" name="file" required /></td>
-                    </tr>
-                    <tr>
-                        <th>등록</th>
-                        <td colspan="2"><input type="submit" value="등록"></td>
-                    </tr>
-                </table>
-            </form>
+            <ul class="nav navbar-nav navbar-right">
+              <li><a href="#" style='color:white'>Link</a></li>
+              <li class="dropdown">
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"
+                  style='color:white'>Dropdown <span class="caret"></span></a>
+                <ul class="dropdown-menu" role="menu">
+                  <li><a href="#">Action</a></li>
+                  <li><a href="#">Another action</a></li>
+                  <li><a href="#">Something else here</a></li>
+                  <li class="divider"></li>
+                  <li><a href="#">Separated link</a></li>
+                </ul>
+              </li>
+            </ul>
+          </div><!-- /.navbar-collapse -->
+        </div><!-- /.container-fluid -->
+      </nav>
+    </div>
+  </p>
+  <div class="container">
+    <h2><strong><br>글쓰기</strong></h2>
+    <form method="post" action="/board/write" onsubmit="onWriteSubmit()">
+      <table class="table">
+        <fieldset style="width:300px">
+          <legend>장르</legend>
+          <input type="checkbox" class="checkSelect" name="genre[]" value="발라드">발라드
+          <input type="checkbox" class="checkSelect" name="genre[]" value="댄스">댄스
+          <input type="checkbox" class="checkSelect" name="genre[]" value="랩/힙합">랩/힙합
+          <input type="checkbox" class="checkSelect" name="genre[]" value="R&B">R&B
+          <input type="checkbox" class="checkSelect" name="genre[]" value="인디음악">인디음악
+          <input type="checkbox" class="checkSelect" name="genre[]" value="록/메탈">록/메탈
+          <input type="checkbox" class="checkSelect" name="genre[]" value="트로트">트로트
+          <input type="checkbox" class="checkSelect" name="genre[]" value="포크/블루스/컨트리">포크/블루스/컨트리
+          <input type="checkbox" class="checkSelect" name="genre[]" value="일렉트로니카">일렉트로니카
+          <input type="checkbox" class="checkSelect" name="genre[]" value="POP">POP
+        </fieldset>
+        </tr>
+        <tr>
+          <th>제목</th>
+          <td><input type="text" name="title" id="title" required /></td>
+        </tr>
+        <tr>
+          <th>작성자</th>
+          <td><input type="text" name="writer" id="writer" required /></td>
+        </tr>
+        <tr>
+          <th>내용</th>
+          <td><input type="text" name="content" id="content" required /></td>
+        </tr>
+        <form method="post" action="/process/upload" entype="multipart/form-data"></form>
+        <tr>
+        <tr>
+          <th>첨부파일</th>
+          <td><input type="file" name="file" required /></td>
+        </tr>
+        <tr>
+        <tr>
+          <th>등록</th>
+          <td colspan="2"><input type="submit" value="등록"></td>
+        </tr>
+      </table>
+    </form>
 
-        </div>
+  </div>
 
-        <script>
-        function onWriteSubmit()
-        {
-            if ( $("#title").val().trim() == "")
-            {
-                var message = "제목을 입력해주세요";
-                $("#title").val("");
-                $("#title").focus();
-                alert(message);
-                return false;
-            }
+  <script>
+    var send_array = Array();
+    var send_cnt = 0;
+    var chkbox = $(".checkSelect");
 
-            if ( $("#content").val().trim() == "")
-            {
-                var message = "제목을 입력해주세요";
-                $("#content").val("");
-                $("#content").focus();
-                alert(message);
-                return false;
-            }
-        }
-        </script>
-        <script src="js/jquery-3.4.1.min.js"></script>
-        <script src="js/bootstrap.js"></script>
-    </body>
+    for (i = 0; i < chkbox.length; i++) {
+      if (chkbox[i].checked == true) {
+        send_array[send_cnt] = chkbox[i].value;
+        send_cnt++;
+      }
+    }
+
+    $("#array").val(send_array);
+    
+    function onWriteSubmit() {
+      if ($("#title").val().trim() == "") {
+        var message = "제목을 입력해주세요";
+        $("#title").val("");
+        $("#title").focus();
+        alert(message);
+        return false;
+      }
+
+      if ($("#content").val().trim() == "") {
+        var message = "제목을 입력해주세요";
+        $("#content").val("");
+        $("#content").focus();
+        alert(message);
+        return false;
+      }
+    }
+  </script>
+  <script src="js/jquery-3.4.1.min.js"></script>
+  <script src="js/bootstrap.js"></script>
+</body>
+
 </html>

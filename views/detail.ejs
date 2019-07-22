@@ -89,8 +89,8 @@
                     <td><%= rows[0].userNum %></td>
                 </tr>
                 <tr>
-                    <th>제목</th>
-                    <td><%= rows[0].postTitle %></td>
+                    <th>장르</th>
+                    <td><%= rows[0].genre %></td>
                     <th>작성일</th>
                     <td colspan="2"><%= rows[0].createAt %></td>
                 </tr>
@@ -106,7 +106,7 @@
             <hr/>
             
             <a class="btn btn-default pull-right" href="/board/edit/<%= rows[0].postId %>">수정</a>
-            <a class="btn btn-default pull-right" href="/board/delete">삭제</a>
+            <a class="btn btn-default pull-right" href="/board/delete/<%= rows[0].postId %>">삭제</a>
             <a class="btn btn-default pull-right" href="/board">목록</a>
 
             
