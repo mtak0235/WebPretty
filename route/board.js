@@ -100,7 +100,7 @@ router.post('/write', upload.array('file', 1), function(req, res, next) {
     console.log(genre);
     
     db.beginTransaction(function(err) {
-        db.query('insert into post(postTitle, postContents, genre, file, createAt) values(?, ?, ?, ?, DATE_ADD(NOW(), INTERVAL 9 HOUR))', [title, content, genre, filename], function(err) {
+        db.query('insert into post(postTitle, postContents, genre, file, createAt) values(?, ?, ?, ?, now())', [title, content, genre, filename], function(err) {
             if (err) {
                 console.log(err);
                 db.rollback(function(err) {
