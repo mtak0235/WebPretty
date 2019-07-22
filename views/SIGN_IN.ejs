@@ -10,7 +10,7 @@
 <body>
     <div class="login">
         <h1>login</h1>
-        <form method="post" action="/auth/login"> 
+        <form method="post" action="/auth/login" id="login"> 
         <table broder="2">
 
             <tr>
@@ -22,24 +22,18 @@
                 <td><input type="password" name="pw" id="loginPw"></td>
             </tr>
             <tr>
-                <td><input type="submit" onclick="login()" value="로그인"></td>
+                <td><input type="submit" value="로그인"></td>
+                <!-- <td><input type="submit" onclick="document.getElementById(login).submit();" value="로그인"></td> -->
             </tr>
 
         </table>
         </form>
     </div>
     <script>
-        function login() {
-            var Id = document.getElementById("loginId").value;
-            var Pw = document.getElementById("loginPw").value;
-            if (Id === rows[0].userId && Pw === rows[0].userPassword) {
-                alert(Id + '님 안녕하십니까');
-            }
-            else {
-                alert('id 혹은 pw 가 틀리셨습니다.');
-            }   
-        }
+
     </script>
+    <script src="jquery-validation/dist/jquery.validate.min.js"></script>
+    <script src="javascripts/login.js"></script>
 </body>
 
 </html>

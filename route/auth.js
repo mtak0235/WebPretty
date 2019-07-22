@@ -2,6 +2,7 @@ var express = require('express');
 var db = require('../dbconnection');
 var ejs = require('ejs');
 var fs = require('fs');
+var bcrypt = require('bcrypt');
 
 var router = express.Router();
 
@@ -39,11 +40,21 @@ router.get('/login', function(req, res) {
 
 router.post('/login', function(req, res) {
     var userId = req.body.id;
-    db.query('select userId, userPassword from user where userId = ?', [userId], function(err, rows) {
+    var password = req.body.pw;
+    db.query('select * from user where userId = ?', [userId], function(err, rows) {
         if (err) throw(err);
-        console.log(userId + "로그인");
-        res.render('SIGN_IN', {rows: rows});
-        res.redirect('/');
+        else {
+            if (rows.length === 0) {
+                res.json({success: false, msg: '해당 유저가 존재하지 않습니다.'})
+            }
+            else {
+                if (!bcrypt.compareSync(password, rows[0].userPassword)) {
+                    res.json({success: false, msg: '비밀번호가 일치하지 않습니다.'})
+                } else {
+                    res.json({success: true})
+                }
+            }
+        }
     })
 })
 
