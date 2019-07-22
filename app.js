@@ -13,12 +13,12 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended:true}));
 
 
-//var userRouter = require('./route/auth');
+var userRouter = require('./route/auth');
 var boardRouter = require('./route/board');
 var noticeRouter = require('./route/notice');
 var uploadRouter = require('./route/uploads');
 
-//app.use("/auth",userRouter);
+app.use("/auth",userRouter);
 app.use("/board",boardRouter);
 app.use("/notice",noticeRouter);
 app.use("/uploads",uploadRouter);

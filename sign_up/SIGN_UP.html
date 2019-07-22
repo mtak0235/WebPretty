@@ -1,41 +1,133 @@
-<!doctype html>
-<html>  
-<head>
-    <meta charset="utf-8">
-    <title>SIGN_UP</title>
-</head>
-<body>
-    <h1>회원 가입</h1>
-    <form action="" accept-charset="urf-8" name="personal_info" method="post">
-        <fieldset style="width:300px">
-        <legend>개인정보입력</legend>
-        <br>이름 <input type="text" id="Name" value="이름을 입력하세요" required>
-        <br>ID <input type="text" id="Id" required>
-        <br>PW <input type="password" id="Pw" required>
-        <br>PW 확인 <input type="password" id="PwCheck" required>
-        <br>이메일<input type="email" name="Email">
-        <br> 별명
-        
-        <br />전화번호<input type="tel" name="phone">
+<!DOCTYPE html>
+<html lang="en">
 
-       
-    </fieldset>    
-     <form action="" accept-charset="utf-8" name="additional_info" method="post">
-    <fieldset style="width:300px">
-        <legend>관심분야</legend>        
-        <input type="checkbox" id="ballad" value="BALLAD">발라드
-        <input type="checkbox" id="dance" value="DANCE">댄스
-        <input type="checkbox" id="hiphop" value="HIPHOP">랩/힙합
-        <input type="checkbox" id="r&b" value="R&B">R&B
-        <input type="checkbox" id="indi" value="INDI">인디음악
-        <input type="checkbox" id="rock&metal" value="ROCK&METAL">록/메탈
-        <input type="checkbox" id="trot" value="TROT">트로트
-        <input type="checkbox" id="fork" value="FORK">포크/블루스/컨트리
-        <input type="checkbox" id="electronica" value="ELECTRONICA">일렉트로니카
-        <input type="checkbox" id="pop" value="POP">POP
-    </fieldset>
-        <input type="submit" value="확인">
-        <input type="reset" value="취소">
-    </form><p><br /></p> 
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>글쓰기</title>
+  <link rel="stylesheet" href="/css/bootstrap.css">
+  <link rel="stylesheet" href="../public/css/style.css">
+</head>
+
+<body>
+  <div id="s">
+    <div id="A">
+      이 노래 모예요?
+    </div>
+
+    <div id="B" style="display: inline"><br>
+      <button type="button" id="b"> <a href="/auth/">회원가입</a></button>
+      <button type="button" id="b"> <a href="/sign_in">로그인</a></button>
+    </div>
+  </div>
+  <p>
+    <div id="C">
+      <nav class="navbar navbar-dark bg-dark">
+        <div class="container-fluid">
+          <!-- Brand and toggle get grouped for better mobile display -->
+          <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse"
+              data-target="#bs-example-navbar-collapse-1">
+              <span class="sr-only">Toggle navigation</span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="/" style='color:white'>Home</a>
+
+          </div>
+
+          <!-- Collect the nav links, forms, and other content for toggling -->
+          <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+            <ul class="nav navbar-nav">
+              <li><a href="/board" style='color:white'>Q&A</a></li>
+              <li><a href="/notice" style='color:white'>notice</a></li>
+              <li><a href="/board" style='color:white'>my page</a></li>
+              <li class="dropdown">
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"
+                  style='color:white'>Dropdown <span class="caret"></span></a>
+                <ul class="dropdown-menu" role="menu">
+                  <li><a href="#" style='color:white'>Action</a></li>
+                  <li><a href="#" style='color:white'>Another action</a></li>
+                  <li><a href="#" style='color:white'>Something else here</a></li>
+                  <li class="divider"></li>
+                  <li><a href="#" style='color:white'>Separated link</a></li>
+                  <li class="divider"></li>
+                  <li><a href="#">One more separated link</a></li>
+                </ul>
+              </li>
+            </ul>
+            <form class="navbar-form navbar-left" role="search">
+              <div class="form-group">
+                <input type="text" class="form-control" placeholder="Search">
+              </div>
+              <button type="submit" class="btn btn-default">Submit</button>
+            </form>
+            <ul class="nav navbar-nav navbar-right">
+              <li><a href="#" style='color:white'>Link</a></li>
+              <li class="dropdown">
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"
+                  style='color:white'>Dropdown <span class="caret"></span></a>
+                <ul class="dropdown-menu" role="menu">
+                  <li><a href="#">Action</a></li>
+                  <li><a href="#">Another action</a></li>
+                  <li><a href="#">Something else here</a></li>
+                  <li class="divider"></li>
+                  <li><a href="#">Separated link</a></li>
+                </ul>
+              </li>
+            </ul>
+          </div><!-- /.navbar-collapse -->
+        </div><!-- /.container-fluid -->
+      </nav>
+    </div>
+  </p>
+    <h1>회원 가입</h1>
+    <form action="/auth/join" accept-charset="urf-8" name="personal_info" method="post">
+        <fieldset style="width:300px">
+            <legend>개인정보입력</legend>
+            <br>이름 <input type="text" name="name" value="이름을 입력하세요" required>
+            <br>ID <input type="text" name="id" required>
+            <br>PW <input type="password" name="pw" required>
+            <br>PW 확인 <input type="password" name="pwCheck" required>
+            <br>이메일<input type="email" name="email">
+            <br> 별명<input type="text" name="nickname">
+            <br />전화번호<input type="tel" name="phone">
+        </fieldset>
+            <fieldset style="width:300px">
+                <legend>관심분야</legend>
+                <input type="checkbox" name="genre" value="발라드">발라드
+                <input type="checkbox" name="genre" value="댄스">댄스
+                <input type="checkbox" name="genre" value="랩/힙합">랩/힙합
+                <input type="checkbox" name="genre" value="R&B">R&B
+                <input type="checkbox" name="genre" value="인디음악">인디음악
+                <input type="checkbox" name="genre" value="록/메탈">록/메탈
+                <input type="checkbox" name="genre" value="트로트">트로트
+                <input type="checkbox" name="genre" value="포크/블루스/컨트리">포크/블루스/컨트리
+                <input type="checkbox" name="genre" value="일렉트로니카">일렉트로니카
+                <input type="checkbox" name="genre" value="POP">POP
+            </fieldset>
+            <input type="submit" value="확인">
+            <input type="reset" value="취소">
+        </form>
+        <p><br /></p>
+
+        <script>
+            var send_array = Array();
+            var send_cnt = 0;
+            var chkbox = $(".checkSelect");
+        
+            for (i = 0; i < chkbox.length; i++) {
+              if (chkbox[i].checked == true) {
+                send_array[send_cnt] = chkbox[i].value;
+                send_cnt++;
+              }
+            }
+        
+            $("#array").val(send_array);
+        </script>
+        <script src="js/jquery-3.4.1.min.js"></script>
+        <script src="js/bootstrap.js"></script>
 </body>
+
 </html>
