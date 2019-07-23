@@ -16,12 +16,12 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended:true}));
 app.use(cookieParser());
 
-app.use(expressSession({
-    secret: 'my key',
-    store: new MySQLStore(db),
-    resave: false,
-    saveUninitialized: false
-}));
+// app.use(expressSession({
+//     secret: 'my key',
+//     store: new MySQLStore(db),
+//     resave: false,
+//     saveUninitialized: false
+// }));
 
 var userRouter = require('./route/auth');
 var boardRouter = require('./route/board');

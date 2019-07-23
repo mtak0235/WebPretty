@@ -23,7 +23,7 @@ router.post('/join', function(req, res, next) {
     var body = req.body;
     var name = req.body.name;
     var id = req.body.id;
-    var password = bcrypt.hashSync(req.body.pw);
+    var password = req.body.pw;
     var email = req.body.email;
     var phone = req.body.phone;
     var nickname = req.body.nickname;
