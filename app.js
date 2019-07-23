@@ -6,7 +6,6 @@ var db = require('./dbconnection');
 var expressSession = require('express-session');
 var MySQLStore = require('express-mysql-session');
 var fs = require('fs');
-var multer = require('multer');
 var cors = require('cors');
 
 var app = express();
@@ -16,22 +15,21 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended:true}));
 app.use(cookieParser());
 
-// app.use(expressSession({
-//     secret: 'my key',
-//     store: new MySQLStore(db),
-//     resave: false,
-//     saveUninitialized: false
-// }));
+app.use(expressSession({
+    secret: 'my key',
+    store: new MySQLStore(db),
+    resave: false,
+    saveUninitialized: false
+}));
 
 var userRouter = require('./route/auth');
 var boardRouter = require('./route/board');
 var noticeRouter = require('./route/notice');
-var uploadRouter = require('./route/uploads');
+
 
 app.use("/auth",userRouter);
 app.use("/board",boardRouter);
 app.use("/notice",noticeRouter);
-app.use("/uploads",uploadRouter);
 
 app.use(express.static('board'));
 	

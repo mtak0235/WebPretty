@@ -1,6 +1,6 @@
 var express = require('express');
 var db = require('../dbconnection');
-var ejs = require('ejs');
+var path = require('path');
 var fs = require('fs');
 var multer = require('multer');
 
@@ -10,13 +10,14 @@ var router = express.Router();
 
 //목록
 router.get('/', function(req, res) { //localhost:3000/board 일 때
-    db.query('select postId, postTitle, userNum, hit, DATE_FORMAT(createAt, "%Y %c/%e %r") from post', function(err, rows) {
+    db.query('select postId, postTitle, userNum, hit, createAt from post', function(err, rows) {
         if (err) {
             console.log(err);
         }
         console.log(rows);
         res.render('board', {rows: rows});
     })
+
 
 });
 
@@ -33,7 +34,7 @@ router.get('/detail/:postId', function(req, res, next) { //localhost:3000/board/
                     console.error('rollback error1');
                 });
             }
-            db.query('select postId, postTitle, userNum, postContents, genre, DATE_FORMAT(createAt, "%Y %c/%e %r"), hit, file from post where postId=?', [postId], function(err, rows) {
+            db.query('select postId, postTitle, userNum, postContents, genre, createAt, hit, file from post where postId=?', [postId], function(err, rows) {
                 if (err) {
                     console.log(err);
                     db.rollback(function () {
@@ -70,63 +71,74 @@ router.get('/write', function(req, res, next) {
     res.render('write');
 });
 
-var storage = multer.diskStorage({
-    destination: function(req, res, callback) {
-        callback(null, 'uploads');
-    },
-    filename: function(req, file, callback) {
-        var extention = path.extname(file.originalname);
-        var basename = path.basename(file.originalname, extention);
-        callback(null, basename + Date.now() + extention);
-    }
-});
-var upload = multer({
-    storage:storage,
-    limits:{
-        files:5
-    }
+// var storage = multer.diskStorage({
+//     destination: function(req, res, callback) {
+//         callback(null, 'uploads');
+//     },
+//     filename: function(req, file, callback) {
+//         var extention = path.extname(file.originalname);
+//         var basename = path.basename(file.originalname, extention);
+//         callback(null, basename + Date.now() + extention);
+//     }
+// });
+
+const upload = multer({
+    storage: multer.diskStorage({
+        destination: function(req, res, callback) {
+            callback(null, 'uploads');
+        },
+        filename: function(req, file, callback) {
+            var extention = path.extname(file.originalname);
+            var basename = path.basename(file.originalname, extention);
+            callback(null, basename + Date.now() + extention);
+        }
+    })
 });
 
 //데이터베이스에 글 저장
-router.post('/write', upload.array('file', 1), function(req, res, next) {
-    var body = req.body;
-    var title = req.body.title;
-    //var writer = req.params.userNickname;
-    var content = req.body.content;
-    var genre = req.body.genre;
-    var files = req.files;
-    var filename;
+router.post('/write', upload.single('file'), function(req, res, next) {
+        var body = req.body;
+        var title = req.body.title;
+        //var writer = req.params.userNickname;
+        var content = req.body.content;
+        var genre = req.body.genre.join(',');
+        var file = req.file;
+        console.log(file);
+
+        var filename = file.filename;
+
+        db.beginTransaction(function(err) {
+            db.query('insert into post(postTitle, postContents, genre, file, createAt) values(?, ?, ?, ?, DATE_ADD(NOW(), INTERVAL 9 HOUR))', [title, content, genre, filename], function(err) {
+                if (err) {
+                    console.log(err);
+                    db.rollback(function(err) {
+                        console.error("rollback error1");
+                    }); 
+                }
+                db.query('select last_insert_id() as postId', function(err, rows) {
+                    if (err) { 
+                        console.log(err);
+                        db.rollback(function(err) {
+                        console.error("rollback error2");
+                    });
+                    }
+    
+                    else {
+                        db.commit(function (err) {
+                            if(err) throw(err);
+    
+                            console.log("row : " + rows);
+                            var postId = rows[0].postId;
+                            res.redirect('/board/detail/'+ postId);
+                        });
+                    }
+                });
+            });
+        });
 
     console.log(genre);
     
-    db.beginTransaction(function(err) {
-        db.query('insert into post(postTitle, postContents, genre, file, createAt) values(?, ?, ?, ?, DATE_ADD(NOW(), INTERVAL 9 HOUR))', [title, content, genre, filename], function(err) {
-            if (err) {
-                console.log(err);
-                db.rollback(function(err) {
-                    console.error("rollback error1");
-                }); 
-            }
-            db.query('select last_insert_id() as postId', function(err, rows) {
-                if (err) { 
-                    console.log(err);
-                    db.rollback(function(err) {
-                    console.error("rollback error2");
-                });
-                }
 
-                else {
-                    db.commit(function (err) {
-                        if(err) throw(err);
-
-                        console.log("row : " + rows);
-                        var postId = rows[0].postId;
-                        res.redirect('/board/detail/'+ postId);
-                    });
-                }
-            });
-        });
-    });
 });
 
 //수정
