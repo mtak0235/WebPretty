@@ -3,8 +3,12 @@ var db = require('../dbconnection');
 var ejs = require('ejs');
 var fs = require('fs');
 var bcrypt = require('bcrypt');
+var cookieParser = require('cookie-parser');
+var expressSession = require('express-session');
+var MySQLStore = require('express-mysql-session');
 
 var router = express.Router();
+
 
 //회원가입
 router.get('/join', function(req, res) {
@@ -19,7 +23,7 @@ router.post('/join', function(req, res, next) {
     var body = req.body;
     var name = req.body.name;
     var id = req.body.id;
-    var password = req.body.pw;
+    var password = bcrypt.hashSync(req.body.pw);
     var email = req.body.email;
     var phone = req.body.phone;
     var nickname = req.body.nickname;
@@ -41,6 +45,7 @@ router.get('/login', function(req, res) {
 router.post('/login', function(req, res) {
     var userId = req.body.id;
     var password = req.body.pw;
+
     db.query('select * from user where userId = ?', [userId], function(err, rows) {
         if (err) throw(err);
         else {
@@ -48,10 +53,13 @@ router.post('/login', function(req, res) {
                 res.json({success: false, msg: '해당 유저가 존재하지 않습니다.'})
             }
             else {
-                if (!bcrypt.compareSync(password, rows[0].userPassword)) {
+                if (!password == rows[0].password) {
                     res.json({success: false, msg: '비밀번호가 일치하지 않습니다.'})
                 } else {
-                    res.json({success: true})
+                    req.session.name = rows[0].userName;
+                    req.session.save(function() {                     
+                        res.redirect('/');
+                    })
                 }
             }
         }
