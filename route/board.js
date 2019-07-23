@@ -10,7 +10,7 @@ var router = express.Router();
 
 //목록
 router.get('/', function(req, res) { //localhost:3000/board 일 때
-    db.query('select postId, postTitle, userNum, hit, DATE_FORMAT(now(), "%Y %c/%e %r") as createAt from post', function(err, rows) {
+    db.query('select postId, postTitle, userNum, hit, DATE_FORMAT(createAt, "%Y %c/%e %r") from post', function(err, rows) {
         if (err) {
             console.log(err);
         }
@@ -33,7 +33,7 @@ router.get('/detail/:postId', function(req, res, next) { //localhost:3000/board/
                     console.error('rollback error1');
                 });
             }
-            db.query('select postId, postTitle, userNum, postContents, genre, DATE_FORMAT(now(), "%Y %c/%e %r") as createAt, hit, file from post where postId=?', [postId], function(err, rows) {
+            db.query('select postId, postTitle, userNum, postContents, genre, DATE_FORMAT(createAt, "%Y %c/%e %r"), hit, file from post where postId=?', [postId], function(err, rows) {
                 if (err) {
                     console.log(err);
                     db.rollback(function () {
