@@ -6,6 +6,7 @@ var fs = require('fs');
 var multer = require('multer');
 var cors = require('cors');
 
+
 var app = express();
 
 app.use(cors());
@@ -24,6 +25,8 @@ app.use("/notice",noticeRouter);
 app.use("/uploads",uploadRouter);
 
 app.use(express.static('board'));
+	
+app.use(express.static(path.join(__dirname, 'node_modules')));
 app.use('/public', express.static(path.join(__dirname, 'public')));
 app.use('/uploads', express.static(path.join(__dirname, 'uploads'))); 
 app.use('/sign_up', express.static(path.join(__dirname,'/SIGN_UP.html')));
@@ -71,5 +74,5 @@ app.get('/user', function(req, res){
 
 app.listen(app.get('port'), function () {
     console.log('Express server listening on port' + app.get('port'))
+    console.log(process.env.NODE_PORT);
 })
-
