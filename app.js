@@ -1,18 +1,27 @@
 var express = require('express');
 var path = require('path');
 var bodyParser = require('body-parser');
+var cookieParser = require('cookie-parser');
 var db = require('./dbconnection');
+var expressSession = require('express-session');
+var MySQLStore = require('express-mysql-session');
 var fs = require('fs');
 var multer = require('multer');
 var cors = require('cors');
-
 
 var app = express();
 
 app.use(cors());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended:true}));
+app.use(cookieParser());
 
+app.use(expressSession({
+    secret: 'my key',
+    store: new MySQLStore(db),
+    resave: false,
+    saveUninitialized: false
+}));
 
 var userRouter = require('./route/auth');
 var boardRouter = require('./route/board');
