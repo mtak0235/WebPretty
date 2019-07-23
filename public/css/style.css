@@ -15,10 +15,11 @@ div#A{
     float : left;
     margin-left: 30px;
     margin-top: 10px;
-   font-weight:3500;
+   font-weight:200;
    font-size: 30px;
    padding-top: 10px;
-   color: whitesmoke;;
+   color: whitesmoke;
+   font-family:monospace;
   
 }
 div#B{
