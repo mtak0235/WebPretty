@@ -1,19 +1,16 @@
 var express = require('express');
 var db = require('../dbconnection');
-var ejs = require('ejs');
 var fs = require('fs');
-var bcrypt = require('bcrypt');
 var cookieParser = require('cookie-parser');
 var expressSession = require('express-session');
-var MySQLStore = require('express-mysql-session');
 
-var router = express.Router();
+// var bcrypt = require('bcrypt');
 
 
 //회원가입
 router.get('/join', function(req, res) {
     res.writeHead(200, {"Content-Type":"text/html"});
-    fs.readFile("./sign_up/SIGN_UP.html", (err, data) => {
+    fs.readFile("./views/SIGN_UP.html", (err, data) => {
         if (err) throw (err);
         res.end(data, 'utf-8');
     });
@@ -27,7 +24,7 @@ router.post('/join', function(req, res, next) {
     var email = req.body.email;
     var phone = req.body.phone;
     var nickname = req.body.nickname;
-    var interest = req.body.genre;
+    var interest = req.body.genre.join(',');
 
     db.query('insert into user (No, userPassword, userName, userEmail, userPhone, userNickname, interest) values(?, ?, ?, ?, ?, ?, ?)', [id, password, name, email, phone, nickname, interest], function(err, rows) {
         if (err) {
@@ -57,13 +54,32 @@ router.post('/login', function(req, res) {
                     res.json({success: false, msg: '비밀번호가 일치하지 않습니다.'})
                 } else {
                     req.session.name = rows[0].userName;
-                    req.session.save(function() {                     
+                    req.session.save(function() {
                         res.redirect('/');
                     })
                 }
             }
         }
     })
+})
+
+//로그아웃
+router.get('/logout', function(req, res, next) {
+    if (req.session.name) {
+        console.log('로그아웃');
+        req.session.destroy(function(err) {
+            if (err) {
+                console.log('세션 삭제시 에러');
+                return;
+            }
+            console.log('세션 삭제 성공');
+            res.redirect('/');
+        })
+    }
+    else {
+        console.log('로그인 안됨');
+        res.redirect('/login');
+    }
 })
 
 module.exports = router;

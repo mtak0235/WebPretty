@@ -10,7 +10,7 @@ var router = express.Router();
 
 //목록
 router.get('/', function(req, res) { //localhost:3000/board 일 때
-    db.query('select postId, postTitle, userNum, hit, createAt from post', function(err, rows) {
+    db.query('select postId, postTitle, userNum, hit, genre, createAt from post', function(err, rows) {
         if (err) {
             console.log(err);
         }
@@ -51,6 +51,12 @@ router.get('/detail/:postId', function(req, res, next) { //localhost:3000/board/
             });
         });
     });
+
+    // db.query('select * from comment where postId = ?', [postId], function(err, rows) {
+    //     if (err) throw (err);
+    //     console.log('rows :' + rows);
+    //     res.render
+    // })
     
 });
 
