@@ -1507,7 +1507,12 @@ input, select, textarea {
 			background-image: linear-gradient(top,skyblue, powderblue);
 			background-color: skyblue;
 				}
+	    #b{
+			width:auto;
+			height: 26px;
+			font-size: 60%;
 
+		}
 /* Header */
 
 	#header {
@@ -1528,6 +1533,19 @@ input, select, textarea {
 			left: 0;
 			bottom: 80px;
 			font-size: 2.75em;
+		}
+		#n{
+			width: 10%;
+			height: 50%;
+			float: left;
+			margin-left: 18px;
+			margin-top: 15px;
+			font-weight: 200;
+			font-size: 30px;
+			padding-top: 10px;
+			color: whitesmoke;
+			font-family: monospace;
+			text-decoration:none
 		}
 
 			#header h1 a {
