@@ -4,11 +4,23 @@ var fs = require('fs');
 var cookieParser = require('cookie-parser');
 var expressSession = require('express-session');
 
-// var bcrypt = require('bcrypt');
 var router = express.Router();
+router.use(cookieParser());
+router.use(expressSession({
+    secret: 'my key',
+
+    debug: true,
+    resave: false,
+    saveUninitialized: true
+}));
+
+// var bcrypt = require('bcrypt');
+
 
 //회원가입
 router.get('/join', function(req, res) {
+    var session = req.session;
+
     res.writeHead(200, {"Content-Type":"text/html"});
     fs.readFile("./views/SIGN_UP.html", (err, data) => {
         if (err) throw (err);
@@ -30,7 +42,7 @@ router.post('/join', function(req, res, next) {
         if (err) {
             console.log(err)};
         console.log("rows :" + rows);
-        res.redirect('/');
+        res.redirect('/auth/login');
     });
 });
 
@@ -53,7 +65,7 @@ router.post('/login', function(req, res) {
                 if (!password == rows[0].password) {
                     res.json({success: false, msg: '비밀번호가 일치하지 않습니다.'})
                 } else {
-                    req.session.name = rows[0].userName;
+                    req.session.id = rows[0].userId;
                     req.session.save(function() {
                         res.redirect('/');
                     })

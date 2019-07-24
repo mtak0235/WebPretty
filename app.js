@@ -14,15 +14,14 @@ db.connect(function (err) {
     console.log("Connected!");
 });
 
-var router = express.Router();
-router.use(cookieParser());
-router.use(expressSession({
-    secret: 'my key',
+// router.use(cookieParser());
+// router.use(expressSession({
+//     secret: 'my key',
 
-    debug: true,
-    resave: true,
-    saveUninitialized: true
-}));
+//     debug: true,
+//     resave: false,
+//     saveUninitialized: true
+// }));
 
 app.use(cors());
 app.use(bodyParser.json());
