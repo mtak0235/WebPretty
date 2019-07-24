@@ -2,11 +2,11 @@ var express = require('express');
 var db = require('../dbconnection');
 var fs = require('fs');
 var cookieParser = require('cookie-parser');
-var expressSession = require('express-session');
+var session = require('express-session');
 
 var router = express.Router();
 router.use(cookieParser());
-router.use(expressSession({
+router.use(session({
     secret: 'my key',
 
     debug: true,
@@ -16,10 +16,14 @@ router.use(expressSession({
 
 // var bcrypt = require('bcrypt');
 
+router.get('/', function (req, res) { //localhost:3000
+    res.render('MAIN', {isLogined: req.session.logined});
+});
+
 
 //회원가입
 router.get('/join', function(req, res) {
-    var session = req.session;
+    
 
     res.writeHead(200, {"Content-Type":"text/html"});
 
@@ -40,7 +44,7 @@ router.post('/join', function(req, res, next) {
     var nickname = req.body.nickname;
     var interest = req.body.genre.join(',');
 
-    db.query('insert into user (No, userPassword, userName, userEmail, userPhone, userNickname, interest) values(?, ?, ?, ?, ?, ?, ?)', [id, password, name, email, phone, nickname, interest], function(err, rows) {
+    db.query('insert into user (userId, userPassword, userName, userEmail, userPhone, userNickname, interest) values(?, ?, ?, ?, ?, ?, ?)', [id, password, name, email, phone, nickname, interest], function(err, rows) {
         if (err) {
             console.log(err)};
         console.log("rows :" + rows);
@@ -50,6 +54,7 @@ router.post('/join', function(req, res, next) {
 
 //로그인
 router.get('/login', function(req, res) {
+    var session = req.session;
     res.render('SIGN_IN');
 });
 
@@ -67,7 +72,9 @@ router.post('/login', function(req, res) {
                 if (!password == rows[0].password) {
                     res.json({success: false, msg: '비밀번호가 일치하지 않습니다.'})
                 } else {
-                    req.session.id = rows[0].userId;
+                    req.session.id = userId;
+                    req.session.logined = true;
+                    console.log(req.session.id);
                     req.session.save(function() {
                         res.redirect('/');
                     })
@@ -79,13 +86,15 @@ router.post('/login', function(req, res) {
 
 //로그아웃
 router.get('/logout', function(req, res, next) {
-    if (req.session.name) {
+    if (req.session) {
         console.log('로그아웃');
         req.session.destroy(function(err) {
+            
             if (err) {
                 console.log('세션 삭제시 에러');
                 return;
             }
+            
             console.log('세션 삭제 성공');
             res.redirect('/');
         })
