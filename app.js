@@ -3,7 +3,6 @@ var path = require('path');
 var bodyParser = require('body-parser');
 var cookieParser = require('cookie-parser');
 var db = require('./dbconnection');
-var expressSession = require('express-session');
 var fs = require('fs');
 var cors = require('cors');
 
@@ -14,14 +13,6 @@ db.connect(function (err) {
     console.log("Connected!");
 });
 
-// router.use(cookieParser());
-// router.use(expressSession({
-//     secret: 'my key',
-
-//     debug: true,
-//     resave: false,
-//     saveUninitialized: true
-// }));
 
 app.use(cors());
 app.use(bodyParser.json());
@@ -32,7 +23,7 @@ var userRouter = require('./route/auth');
 var boardRouter = require('./route/board');
 var noticeRouter = require('./route/notice');
 
-
+app.use("/", userRouter);
 app.use("/auth", userRouter);
 app.use("/board", boardRouter);
 app.use("/notice", noticeRouter);
@@ -44,18 +35,15 @@ app.use('/public', express.static(path.join(__dirname, 'public')));
 app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 app.use('/sign_up', express.static(path.join(__dirname, '/SIGN_UP.html')));
 app.use('/sign_in', express.static(path.join(__dirname, '/SIGN_IN.html')));
-app.use('/mainPage', express.static(path.join(__dirname, '/MAIN.html')));
+// app.use('/mainPage', express.static(path.join(__dirname, '/MAIN.ejs')));
 
 app.set('port', process.env.PORT || 3000);
 app.set('views', path.join(__dirname, '/views'));
 app.set('view engine', 'ejs');
 
 app.get('/', function (req, res) { //localhost:3000
-    res.writeHead(200, { "Content-Type": "text/html" });
-    fs.readFile(__dirname + "/mainPage/MAIN.html", (err, data) => {
-        if (err) throw (err);
-        res.end(data, 'utf-8');
-    })
+    var user = req.session.id;
+    res.render('MAIN', {user: user});
 });
 
 

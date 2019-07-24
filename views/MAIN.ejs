@@ -45,10 +45,13 @@
 
 									<!-- Banner Copy -->
 										<p>DO YOU KNOW THE TITLE OF THIS MUSIC?<br>COME AND JOY WITH interesting people!</p>
-										
-										<a href="/auth/join" class="button-large">JOIN</a>
-										<a href="/auth/login" class="button-large">LOGIN</a>
-
+										<% if (!isLogined) { %>
+											<a href="/auth/join" class="button-large">JOIN</a>
+											<a href="/auth/login" class="button-large">LOGIN</a>
+											
+										<% } else {%>
+											<a href="/auth/logout" class="button-large">LOGOUT</a>
+										<% } %>
 								</div>
 								<div class="col-6 col-12-medium imp-medium">
 
