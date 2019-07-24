@@ -10,7 +10,9 @@ var router = express.Router();
 //회원가입
 router.get('/join', function(req, res) {
     res.writeHead(200, {"Content-Type":"text/html"});
-    fs.readFile("./views/SIGN_UP.html", (err, data) => {
+
+    fs.readFile("webpretty/views/SIGN_UP.html", (err, data) => {
+
         if (err) throw (err);
         res.end(data, 'utf-8');
     });
