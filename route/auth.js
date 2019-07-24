@@ -20,6 +20,7 @@ router.get('/', function (req, res) { //localhost:3000
     res.render('MAIN', {isLogined: req.session.logined});
 });
 
+
 //회원가입
 router.get('/join', function(req, res) {
     
