@@ -83,6 +83,7 @@
                 <thead>
                     <tr>
                         <th>번호</th>
+                        <th>장르</th>
                         <th>제목</th>
                         <th>작성자</th>
                         <th>날짜</th>
@@ -96,10 +97,13 @@
                             <%=rows[i].postId%>
                         </td>
                         <td>
+                          <%=rows[i].genre%>
+                      </td>
+                        <td>
                             <a href='/board/detail/<%=rows[i].postId%>'><%= rows[i].postTitle %></a>
                         </td>
                         <td>
-                            <%= rows[i].userNum %>
+                            <%= rows[i].userNickname %>
                         </td>
                         <td>
                             <%= rows[i].createAt %>
