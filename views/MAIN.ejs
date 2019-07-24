@@ -44,12 +44,13 @@
 								<div class="col-6 col-12-medium">
 
 									<!-- Banner Copy -->
+									<% if (!isLogined) { %>
 										<p>DO YOU KNOW THE TITLE OF THIS MUSIC?<br>COME AND JOY WITH interesting people!</p>
-										<% if (!isLogined) { %>
 											<a href="/auth/join" class="button-large">JOIN</a>
 											<a href="/auth/login" class="button-large">LOGIN</a>
 											
 										<% } else {%>
+											<p>WELCOME, <%= nickname %>!</p>
 											<a href="/auth/logout" class="button-large">LOGOUT</a>
 										<% } %>
 								</div>

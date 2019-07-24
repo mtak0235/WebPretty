@@ -17,7 +17,7 @@ router.use(session({
 // var bcrypt = require('bcrypt');
 
 router.get('/', function (req, res) { //localhost:3000
-    res.render('MAIN', {isLogined: req.session.logined});
+    res.render('MAIN', {isLogined: req.session.logined, nickname: req.session.name});
 });
 
 
@@ -73,6 +73,7 @@ router.post('/login', function(req, res) {
                     res.json({success: false, msg: '비밀번호가 일치하지 않습니다.'})
                 } else {
                     req.session.id = userId;
+                    req.session.name = rows[0].userNickname;
                     req.session.logined = true;
                     console.log(req.session.id);
                     req.session.save(function() {
