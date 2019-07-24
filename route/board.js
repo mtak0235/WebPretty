@@ -175,6 +175,7 @@ router.post('/edit/:postId', function(req, res, next) {
 router.get('/delete/:postId', function(req, res, next) {
     var postId = req.params.postId;
 
+
     db.beginTransaction(function(err) {
         db.query('delete from post where postId = ?', [postId], function(err) {
             if (err) {
@@ -199,6 +200,7 @@ router.get('/delete/:postId', function(req, res, next) {
         })
     })
 })
+
 /*
     //페이징
     router.get('/', function(req, res) {
