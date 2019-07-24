@@ -1,0 +1,17 @@
+#t{
+    float:left;
+    margin:10px 30%;
+    padding: 5%;
+    text-align: center;
+    line-height: 20px;
+    font-size: 15px;
+    font-weight: 300;
+
+    border: solid #51575a;
+    border-width: 50px;
+}
+fieldset{   
+     margin-top: 30px;
+    text-align: left;
+}
+

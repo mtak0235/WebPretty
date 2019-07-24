@@ -7,6 +7,7 @@
   <title>글쓰기</title>
   <link rel="stylesheet" href="/css/bootstrap.css">
   <link rel="stylesheet" href="../public/css/style.css">
+  <link rel="stylesheet" href="../public/css/write.css">
 </head>
 
 <body>
@@ -96,18 +97,25 @@
           <input type="checkbox" class="checkSelect" name="genre[]" value="일렉트로니카">일렉트로니카
           <input type="checkbox" class="checkSelect" name="genre[]" value="POP">POP
         </fieldset>
-        </tr>
+        
         <tr>
           <th>제목</th>
-          <td><input type="text" name="title" id="title" required /></td>
+          <td><input type="text"  style="width:80%"name="title" id="title" required /></td>
         </tr>
         <tr>
           <th>작성자</th>
-          <td><input type="text" name="writer" id="writer" required /></td>
+          <td><input type="text" style="width:80%"name="writer" id="writer" required /></td>
         </tr>
         <tr>
           <th>내용</th>
-          <td><textarea name="content" id="content" required ></textarea></td>
+          <td><textarea name="content" id="content" onkeydown="resize(this)" onkeyup="resize(this)" required style=" resize:vertical;min-height: 100px;
+            width: 80%;" ></textarea></td>
+            <script>
+                function resize(obj) {
+                  obj.style.height = "1px";
+                  obj.style.height = (12+obj.scrollHeight)+"px";
+                }
+                </script>
         </tr>
         <form method="post" action="/process/upload" entype="multipart/form-data"></form>
         <tr>

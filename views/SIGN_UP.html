@@ -7,7 +7,7 @@
   <title>글쓰기</title>
   <link rel="stylesheet" href="/css/bootstrap.css">
   <link rel="stylesheet" href="../public/css/style.css">
-
+  <link rel="stylesheet" href="../public/css/sign_up.css">
 </head>
 
 <body>
@@ -83,17 +83,20 @@
       </nav>
     </div>
   </p>
-    <h1 style="margin-top:2px;">회원 가입</h1>
-    <form action="/auth/join" accept-charset="urf-8" name="personal_info" method="post">
+  <div id="t">
+    <h1 style="margin-top:1px;">회원 가입</h1>
+    <form action="/auth/join" style="margin-top: 30px;"accept-charset="urf-8" name="personal_info" method="post">
         <fieldset style="width:300px">
-            <legend>개인정보입력</legend>
-            <br>이름 <input type="text" name="name" value="이름을 입력하세요" required>
-            <br>ID <input type="text" name="id" required>
-            <br>PW <input type="password" name="pw" required>
-            <br>PW 확인 <input type="password" name="pwCheck" required>
-            <br>이메일<input type="email" name="email">
-            <br> 별명<input type="text" name="nickname">
-            <br />전화번호<input type="tel" name="phone">
+            <legend style="text-align:center;">개인정보입력</legend>
+            <table>
+            <tr><td>이름</td> <td><input type="text" name="name" value="이름을 입력하세요" required></td></tr>
+            <tr><td>ID</td> <td><input type="text" name="id" required></td></tr>
+            <tr><td>PW</td> <td><input type="password" name="pw" required></td></tr>
+            <tr><td>PW 확인</td> <td><input type="password" name="pwCheck" required></td></tr>
+            <tr><td>이메일</td><td><input type="email" name="email"></td></tr>
+             <tr><td>별명</td><td><input type="text" name="nickname"></td></tr>
+            <tr><td>전화번호</td><td><input type="tel" name="phone"></td></tr>
+            </table>
         </fieldset>
             <fieldset style="width:300px">
                 <legend>관심분야</legend>
@@ -105,13 +108,13 @@
                 <input type="checkbox" name="genre" value="록/메탈">록/메탈
                 <input type="checkbox" name="genre" value="트로트">트로트
                 <input type="checkbox" name="genre" value="포크/블루스/컨트리">포크/블루스/컨트리
-                <input type="checkbox" name="genre" value="일렉트로니카">일렉트로니카
+                <br><input type="checkbox" name="genre" value="일렉트로니카">일렉트로니카
                 <input type="checkbox" name="genre" value="POP">POP
-            </fieldset>
+            </fieldset><br><br>
             <input type="submit" value="확인">
             <input type="reset" value="취소">
         </form>
-        <p><br /></p>
+      </div>
 
         <script>
             var send_array = Array();
@@ -130,5 +133,6 @@
         <script src="js/jquery-3.4.1.min.js"></script>
         <script src="js/bootstrap.js"></script>
 </body>
+
 
 </html>
