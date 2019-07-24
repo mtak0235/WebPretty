@@ -5,7 +5,7 @@ var cookieParser = require('cookie-parser');
 var expressSession = require('express-session');
 
 // var bcrypt = require('bcrypt');
-
+var router = express.Router();
 
 //회원가입
 router.get('/join', function(req, res) {
