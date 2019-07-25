@@ -101,62 +101,65 @@ router.get('/write', function(req, res, next) {
 //     }
 // });
 
-const upload = multer({
-    storage: multer.diskStorage({
-        destination: function(req, res, callback) {
-            callback(null, 'uploads');
+
+
+
+//데이터베이스에 글 저장
+router.post('/write', upload, function(req, res, next) {
+    
+    var storage = multer.diskStorage({
+        destination: function(req, file, callback) {
+            callback(null, 'uploads/'); //파일 디렉토리 설정
         },
         filename: function(req, file, callback) {
             var extention = path.extname(file.originalname);
             var basename = path.basename(file.originalname, extention);
-            callback(null, basename + Date.now() + extention);
+            callback(null, basename + Date.now() + extention); //저장할 이름 설정
         }
     })
-});
+    var upload = multer({
+        storage: storage
+    }).single('file');
 
-//데이터베이스에 글 저장
-router.post('/write', upload.single('file'), function(req, res, next) {
-        var body = req.body;
-        var title = req.body.title;
-        var writer = req.session.no;
-        var content = req.body.content;
-        var genre = req.body.genre.join(',');
-        var file = req.file;
-        console.log(file);
-        console.log(writer);
+    var body = req.body;
+    var title = req.body.title;
+    var writer = req.session.no;
+    var content = req.body.content;
+    var genre = req.body.genre.join(',');
+    var userfile = req.file;
+    console.log("file: " + req.file);
+    //var filename = file.filename();
 
-        //var filename = file.filename();
-
-        db.beginTransaction(function(err) {
-            db.query('insert into post(postTitle, postContents, genre, file, userNum, createAt) values(?, ?, ?, 1, ?, DATE_ADD(NOW(), INTERVAL 9 HOUR))', [title, content, genre, writer], function(err) {
-                if (err) {
+    db.beginTransaction(function(err) {
+        db.query('insert into post(postTitle, postContents, genre, file, userNum, createAt) values(?, ?, ?, ?, ?, DATE_ADD(NOW(), INTERVAL 9 HOUR))', [title, content, genre, upload.filename, writer], function(err) {
+            if (err) {
+                console.log(err);
+                db.rollback(function(err) {
+                    console.error("rollback error1");
+                }); 
+            }
+            db.query('select last_insert_id() as postId', function(err, rows) {
+                if (err) { 
                     console.log(err);
                     db.rollback(function(err) {
-                        console.error("rollback error1");
-                    }); 
-                }
-                db.query('select last_insert_id() as postId', function(err, rows) {
-                    if (err) { 
-                        console.log(err);
-                        db.rollback(function(err) {
-                        console.error("rollback error2");
-                    });
-                    }
-    
-                    else {
-                        db.commit(function (err) {
-                            if(err) throw(err);
-    
-                            console.log("row : " + rows);
-                            var postId = rows[0].postId;
-                            res.redirect('/board/detail/'+ postId);
-                        });
-                    }
+                    console.error("rollback error2");
                 });
+                }
+
+                else {
+                    db.commit(function (err) {
+                        if(err) throw(err);
+
+                        console.log("row : " + rows);
+                        var postId = rows[0].postId;
+                        res.redirect('/board/detail/'+ postId);
+                    });
+                }
             });
         });
+    });
 
-    console.log(genre);
+console.log(genre);
 
 });
 
