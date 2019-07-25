@@ -112,26 +112,36 @@
         <td colspan="5"><%= post[0].file %></td>
       </tr>
     </table>
-    <table>
+    <table style="width:80%;">
       <thead>
         
-        <th>댓글(<%= comment.length %>)</th>
+        <th>댓글(<%= comment.length %>) </th>
         <% for(var i = 0; i < comment.length; i++) { %>
       </thead>
       <tbody>
-        <td><%= comment[i].userNickname %>(<%=comment[i].createAt%>)</td>
-        <td><%= comment[i].contents %></td>
+        <tr><td id="user"><%= comment[i].userNickname %>(<%=comment[i].createAt%>)</td>
+        <td id="comment"><%= comment[i].contents %></td> </tr>
         <% } %>
         
       </tbody>
       <tfoot>
         <form method="post" action="/board/<%= post[0].postId %>/process/comment">
-          <td><textarea name="content" id="content"></textarea></td>
+          <tr><td colspan="2"><textarea name="content" id="content" style="width:100% "></textarea></td></tr>
           <td><input type="submit" value="등록"></td>
         </form>
       </tfoot>
     </table>
     <hr />
+
+    <style>
+       #user {padding-right: 10%;
+        border-top: solid gray;
+        border-bottom: solid gray;}
+        #comment{
+          border-top: solid gray;
+        border-bottom: solid gray;
+        }
+    </style>
 
     <a class="btn btn-default pull-right" href="/board/edit/<%= post[0].postId %>">수정</a>
     <a class="btn btn-default pull-right" href="/board/delete/<%= post[0].postId %>">삭제</a>
