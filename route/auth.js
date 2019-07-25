@@ -1,18 +1,9 @@
 var express = require('express');
 var db = require('../dbconnection');
 var fs = require('fs');
-var cookieParser = require('cookie-parser');
-var session = require('express-session');
 
 var router = express.Router();
-router.use(cookieParser());
-router.use(session({
-    secret: 'my key',
 
-    debug: true,
-    resave: false,
-    saveUninitialized: true
-}));
 
 // var bcrypt = require('bcrypt');
 
@@ -27,7 +18,7 @@ router.get('/join', function(req, res) {
 
     res.writeHead(200, {"Content-Type":"text/html"});
 
-    fs.readFile("webpretty/views/SIGN_UP.html", (err, data) => {
+    fs.readFile("./views/SIGN_UP.html", (err, data) => {
 
         if (err) throw (err);
         res.end(data, 'utf-8');
@@ -72,10 +63,10 @@ router.post('/login', function(req, res) {
                 if (!password == rows[0].password) {
                     res.json({success: false, msg: '비밀번호가 일치하지 않습니다.'})
                 } else {
-                    req.session.id = userId;
+                    req.session.no = rows[0].No;
                     req.session.name = rows[0].userNickname;
                     req.session.logined = true;
-                    console.log(req.session.id);
+                    console.log(req.session.no);
                     req.session.save(function() {
                         res.redirect('/');
                     })

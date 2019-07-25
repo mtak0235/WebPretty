@@ -15,15 +15,13 @@ router.get('/', function(req, res) { //localhost:3000/board 일 때
             console.log(err);
         }
         console.log(rows);
-        res.render('board', {rows: rows});
+        res.render('board', {rows: rows, isLogined: req.session.logined, nickname: req.session.name});
     })
 });
 
 //읽기
 router.get('/detail/:postId', function(req, res, next) { //localhost:3000/board/detail/:postid
     var postId = req.params.postId;
-    // var userNum = req.body.user;
-    // var userId = req.session.id;
     console.log("postId : " + postId);
 
     db.beginTransaction(function(err) {
@@ -34,24 +32,44 @@ router.get('/detail/:postId', function(req, res, next) { //localhost:3000/board/
                     console.error('rollback error1');
                 });
             }
-            db.query('select postId, postTitle, userNum, postContents, genre, DATE_FORMAT(createAt, "%Y %c/%e %r") as createAt, hit, file, userNickname from post, user where userNum = no and postId=?', [postId], function(err, rows) {
+            db.query('select postId, postTitle, postContents, genre, DATE_FORMAT(createAt, "%Y %c/%e %r") as createAt, hit, file, userNickname from post, user where userNum = no and postId=?', [postId], function(err, post) {
                 if (err) {
                     console.log(err);
                     db.rollback(function () {
                         console.error('rollback err2');
                     })
                 }
-                // db.query('select no, postId, userNum from comment where user')
+                db.query('select commentNo, postId, userNum, contents, DATE_FORMAT(createAt, "%Y %c/%e %r") as createAt, userNickname from comment, user where userNum=no and postId = ?', [postId], function(err, comment) {
+                    if (err) {
+                        console.log(err);
+                        db.rollback(function() {
+                            console.error('rollback err3');
+                        })
+                    }
                 else {
                     db.commit(function (err) {
                         if (err) console.log(err);
-                        console.log("row : " + rows + "deleted");
-                        res.render('detail', {title: rows[0].postTitle, rows: rows});
+                        console.log("row : " + post);
+                        res.render('detail', {title: post[0].postTitle, post: post, comment: comment, isLogined: req.session.logined});
                     })
                 }
             });
+        })
         });
     });
+
+//댓글 쓰기
+router.post('/:postId/process/comment', function(req, res) {
+    var body = req.body;
+    var postId = req.params.postId;
+    var content = req.body.content;
+    var writer = req.session.no;
+
+    db.query('insert into comment (postId, contents, userNum, createAt) values (?, ?, ?, DATE_ADD(NOW(), INTERVAL 9 HOUR))' , [postId, content, writer], function (err, comment) {
+        if (err) throw(err);
+        res.redirect('/board/detail/' + postId);
+    })
+})
 
     // db.query('select * from comment where postId = ?', [postId], function(err, rows) {
     //     if (err) throw (err);
@@ -63,14 +81,7 @@ router.get('/detail/:postId', function(req, res, next) { //localhost:3000/board/
 
 //쓰기
 router.get('/write', function(req, res, next) {
-    req.sessionn.id = userId;
-    db.query('select userNickname from user where userId=?', [userId], function(err, data) {
-        if (err) {
-            console.log(err);
-        }
-        console.log('user nickname'+ data);
-        res.render('write', {user: data});
-    })
+        res.render('write', {isLogined: req.session.logined, nickname: req.session.name});
     
 })
 
@@ -107,11 +118,12 @@ const upload = multer({
 router.post('/write', upload.single('file'), function(req, res, next) {
         var body = req.body;
         var title = req.body.title;
-        var writer = req.session.id;
+        var writer = req.session.no;
         var content = req.body.content;
         var genre = req.body.genre.join(',');
         var file = req.file;
         console.log(file);
+        console.log(writer);
 
         //var filename = file.filename();
 
@@ -145,7 +157,6 @@ router.post('/write', upload.single('file'), function(req, res, next) {
         });
 
     console.log(genre);
-    
 
 });
 

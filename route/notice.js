@@ -12,7 +12,7 @@ router.get('/', function(req, res) {
             console.log(err);
         }
         console.log(rows);
-        res.render('notice', {rows: rows});
+        res.render('notice', {rows: rows, isLogined: req.session.logined, nickname: req.session.name});
     })
 
 });

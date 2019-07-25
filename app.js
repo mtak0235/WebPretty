@@ -2,6 +2,7 @@ var express = require('express');
 var path = require('path');
 var bodyParser = require('body-parser');
 var cookieParser = require('cookie-parser');
+var session = require('express-session');
 var db = require('./dbconnection');
 var fs = require('fs');
 var cors = require('cors');
@@ -13,6 +14,14 @@ db.connect(function (err) {
     console.log("Connected!");
 });
 
+app.use(cookieParser());
+app.use(session({
+    secret: 'my key',
+
+    debug: true,
+    resave: false,
+    saveUninitialized: true
+}));
 
 app.use(cors());
 app.use(bodyParser.json());
