@@ -14,8 +14,12 @@
              </div>
             
              <div id="B" style="display: inline"><br><BR>
-               <button type = "button" id = "b"> <a href="/auth/join">회원가입</a></button>
-               <button type = "button" id = "b"> <a href="/auth/login">로그인</a></button>
+              <% if (!isLogined) { %>}
+              <button type = "button" id = "b"> <a href="/auth/join">회원가입</a></button>
+              <button type = "button" id = "b"> <a href="/auth/login">로그인</a></button>
+              <% } else { %>
+                <button type = "button" id = "b"> <a href="/auth/logout">로그아웃</a></button>
+              <% } %>
              </div>
            </div>
          <p>  

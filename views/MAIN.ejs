@@ -2,10 +2,10 @@
 <html>
          
   <head>
-      <title>이노모</title>
+      <title>이노모 : 이 노래 모예요?</title>
       <meta charset="utf-8">
       <meta name="viewport" content="width=device-width, initial-scale=1">
-      <title>게시판</title>
+      
       <link rel="stylesheet" href="/css/bootstrap.css">
   <!--     <link rel="stylesheet" href="../public/css/style.css"> -->
 		<link rel="stylesheet" href="../public/css/main.css" />
@@ -30,7 +30,9 @@
 										<a href="/">Homepage</a>
 										<a href="/board">Q&A</a>
 										<a href="/notice">NOTICE</a>
+										<% if (isLogined) { %>
 										<a href="/board">MY PAGE</a>
+										<% } %>
 										<input type="text"  placeholder="Search" >
 										<button type="submit" class="btn btn-default">Submit</button>
 									</nav>
