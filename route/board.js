@@ -101,26 +101,23 @@ router.get('/write', function(req, res, next) {
 //     }
 // });
 
-
+var storage = multer.diskStorage({
+    destination: function(req, file, callback) {
+        callback(null, 'uploads/'); //파일 디렉토리 설정
+    },
+    filename: function(req, file, callback) {
+        var extention = path.extname(file.originalname);
+        var basename = path.basename(file.originalname, extention);
+        callback(null, basename + Date.now() + extention); //저장할 이름 설정
+    }
+})
+var upload = multer({
+    storage: storage
+});
 
 
 //데이터베이스에 글 저장
-router.post('/write', upload, function(req, res, next) {
-    
-    var storage = multer.diskStorage({
-        destination: function(req, file, callback) {
-            callback(null, 'uploads/'); //파일 디렉토리 설정
-        },
-        filename: function(req, file, callback) {
-            var extention = path.extname(file.originalname);
-            var basename = path.basename(file.originalname, extention);
-            callback(null, basename + Date.now() + extention); //저장할 이름 설정
-        }
-    })
-    var upload = multer({
-        storage: storage
-    }).single('file');
-
+router.post('/write', upload.single('file'), function(req, res, next) {
     var body = req.body;
     var title = req.body.title;
     var writer = req.session.no;
