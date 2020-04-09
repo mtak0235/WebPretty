@@ -1,8 +1,8 @@
 var mysql = require('mysql');
 var connection = mysql.createConnection({
-    host : '168.131.35.103',
+    host : '안알려줄 예정',
     user : 'newuser',
-    password : '980208',
+    password : '빠이',
     port : 3306,
     database : 'webpretty'
 });
